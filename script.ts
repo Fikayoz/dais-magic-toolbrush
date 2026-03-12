@@ -1,0 +1,1 @@
+let progress = 0;

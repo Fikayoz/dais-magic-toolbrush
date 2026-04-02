@@ -32,7 +32,7 @@ class Root {
         this.vs = Math.random() * 0.2 + 0.05 //velocity of size
         this.vax = Math.random() * 0.6 -0.3 //velocity of the x angle
         this.vay = Math.random() * 0.6 -0.3 //velocity of the y angle
-        this.lightness = 40;
+        this.lightness = 10;
     }
 
     update(){
@@ -41,12 +41,11 @@ class Root {
         this.size += this.vs;
         this.angleX += this.vax;
         this.angleY += this.vay;
-        if (this.lightness < 95) this.lightness += 0.75
+        if (this.lightness < 95) this.lightness += 0.50
         if (this.size < this.maxSize){
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fillStyle = 'hsl(140, 100%,' + this.lightness + '%)';
-            // ctx.fillStyle = 'hsl(140, 100%, 50%)';
             ctx.fill();
             ctx.stroke();
             requestAnimationFrame(this.update.bind(this));

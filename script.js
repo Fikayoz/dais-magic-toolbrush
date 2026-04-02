@@ -3,6 +3,7 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+let drawing = false;
 class Root {
     x;
     y;
@@ -25,8 +26,8 @@ class Root {
         this.angleX = Math.random() * 6.2; //360 degrees is APPROXIMATELY 6.2 radians
         this.angleY = Math.random() * 6.2; //360 degrees is APPROXIMATELY 6.2 radians
         this.vs = Math.random() * 0.2 + 0.05; //velocity of size
-        this.vax = Math.random(); //velocity of the x angle
-        this.vay = Math.random(); //velocity of the y angle
+        this.vax = Math.random() * 0.6 - 0.3; //velocity of the x angle
+        this.vay = Math.random() * 0.6 - 0.3; //velocity of the y angle
     }
     update() {
         this.x += this.speedX + Math.sin(this.angleX);
@@ -44,12 +45,15 @@ class Root {
         }
     }
 }
-let throttle = 0;
 window.addEventListener('mousemove', function (e) {
-    const root = new Root(e.x, e.y);
-    throttle += 1;
-    if (throttle >= 7) {
+    if (drawing) {
+        const root = new Root(e.x, e.y);
         root.update();
-        throttle = 0;
     }
+});
+window.addEventListener('mousedown', function () {
+    drawing = true;
+});
+window.addEventListener('mouseup', function () {
+    drawing = false;
 });

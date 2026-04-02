@@ -3,6 +3,8 @@ const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRendering
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let drawing: boolean = false;
+
 class Root {
 
     x: number
@@ -27,8 +29,8 @@ class Root {
         this.angleX = Math.random() * 6.2; //360 degrees is APPROXIMATELY 6.2 radians
         this.angleY = Math.random() * 6.2; //360 degrees is APPROXIMATELY 6.2 radians
         this.vs = Math.random() * 0.2 + 0.05 //velocity of size
-        this.vax = Math.random() //velocity of the x angle
-        this.vay = Math.random() //velocity of the y angle
+        this.vax = Math.random() * 0.6 -0.3 //velocity of the x angle
+        this.vay = Math.random() * 0.6 -0.3 //velocity of the y angle
     }
 
     update(){
@@ -48,14 +50,15 @@ class Root {
     }
 }
 
-let throttle: number = 0;
-
 window.addEventListener('mousemove', function(e:MouseEvent){
+    if(drawing){
     const root = new Root(e.x, e.y);
-    throttle += 1;
-    if(throttle >= 7){
         root.update();
-        throttle = 0;
     }
-    
+})
+window.addEventListener('mousedown', function(){
+    drawing = true;
+})
+window.addEventListener('mouseup', function(){
+    drawing = false;
 })

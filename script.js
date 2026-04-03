@@ -47,6 +47,38 @@ class Root {
             ctx.stroke();
             requestAnimationFrame(this.update.bind(this));
         }
+        else {
+            const flower = new Flower(this.x, this.y, this.size);
+            flower.grow();
+        }
+    }
+}
+class Flower {
+    x;
+    y;
+    size;
+    maxFlowerSize;
+    image;
+    frameSize;
+    frameX;
+    frameY;
+    constructor(x, y, size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.maxFlowerSize = this.size + Math.random() * 50;
+        this.image = new Image();
+        this.image.src = 'flowers.png';
+        this.frameSize = 100;
+        this.frameX = Math.floor(Math.random() * 3);
+        this.frameY = Math.floor(Math.random() * 3);
+    }
+    grow() {
+        if (this.size < this.maxFlowerSize) {
+            this.size += 0.3;
+        }
+        ctx.drawImage(this.image, (this.frameX * this.frameSize), (this.frameY * this.frameSize), this.frameSize, this.frameSize, (this.x - this.size / 2), (this.y - this.size / 2), this.size, this.size);
+        requestAnimationFrame(this.grow.bind(this));
     }
 }
 window.addEventListener('mousemove', function (e) {

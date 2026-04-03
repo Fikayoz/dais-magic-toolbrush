@@ -62,6 +62,8 @@ class Flower {
     frameSize;
     frameX;
     frameY;
+    angle;
+    va;
     constructor(x, y, size) {
         this.x = x;
         this.y = y;
@@ -72,13 +74,20 @@ class Flower {
         this.frameSize = 100;
         this.frameX = Math.floor(Math.random() * 3);
         this.frameY = Math.floor(Math.random() * 3);
+        this.angle = 0;
+        this.va = Math.random() * 0.05 - 0.025; //va = velocity of angle
     }
     grow() {
         if (this.size < this.maxFlowerSize) {
             this.size += 0.3;
+            this.angle += this.va;
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.drawImage(this.image, (this.frameX * this.frameSize), (this.frameY * this.frameSize), this.frameSize, this.frameSize, (0 - this.size / 2), (0 - this.size / 2), this.size, this.size);
+            ctx.restore();
+            requestAnimationFrame(this.grow.bind(this));
         }
-        ctx.drawImage(this.image, (this.frameX * this.frameSize), (this.frameY * this.frameSize), this.frameSize, this.frameSize, (this.x - this.size / 2), (this.y - this.size / 2), this.size, this.size);
-        requestAnimationFrame(this.grow.bind(this));
     }
 }
 window.addEventListener('mousemove', function (e) {

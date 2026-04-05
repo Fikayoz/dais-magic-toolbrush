@@ -4,6 +4,11 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let drawing = false;
+ctx.fillStyle = '#FFF5DE';
+ctx.shadowOffsetX = 0;
+ctx.shadowOffsetY = 10;
+ctx.shadowColor = 'rgba(0,0,0,0.5)';
+ctx.globalCompositeOperation = 'destination-over';
 class Root {
     x;
     y;
@@ -12,8 +17,10 @@ class Root {
     maxSize;
     size;
     vs;
+    va;
     vax;
     vay;
+    angle;
     angleX;
     angleY;
     lightness;
@@ -29,6 +36,8 @@ class Root {
         this.vs = Math.random() * 0.2 + 0.5; //velocity of size
         this.vax = Math.random() * 0.6 - 0.3; //velocity of the x angle
         this.vay = Math.random() * 0.6 - 0.3; //velocity of the y angle
+        this.angle = 0;
+        this.va = Math.random() * 0.02 + 0.05;
         this.lightness = 10;
     }
     update() {
@@ -40,22 +49,37 @@ class Root {
         if (this.lightness < 70)
             this.lightness += 0.25;
         if (this.size < this.maxSize) {
-            ctx.fillStyle = '#FFF5DE';
-            ctx.fillRect(this.x, this.y, this.size, this.size);
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.fillRect(0 - this.size / 2, 0 - this.size / 2, this.size, this.size);
+            let double = this.size * 2;
+            ctx.lineWidth = 0.5;
             ctx.strokeStyle = '#3c5186';
-            ctx.strokeRect(this.x, this.y, this.size, this.size);
+            ctx.strokeRect(0 - double / 2, 0 - double / 2, double, double);
+            let triple = this.size * 3;
+            ctx.lineWidth = 0.1;
+            ctx.strokeStyle = 'white';
+            ctx.strokeRect(0 - triple / 2, 0 - triple / 2, triple, triple);
             requestAnimationFrame(this.update.bind(this));
+            ctx.restore();
         }
     }
 }
 window.addEventListener('mousemove', function (e) {
     if (drawing) {
+        for (let i = 0; i < 3; i++) {
+            const root = new Root(e.x, e.y);
+            root.update();
+        }
+    }
+});
+window.addEventListener('mousedown', function (e) {
+    drawing = true;
+    for (let i = 0; i < 3; i++) {
         const root = new Root(e.x, e.y);
         root.update();
     }
-});
-window.addEventListener('mousedown', function () {
-    drawing = true;
 });
 window.addEventListener('mouseup', function () {
     drawing = false;

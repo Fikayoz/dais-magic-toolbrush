@@ -4,8 +4,6 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let drawing: boolean = false;
-ctx.lineWidth = 0.4;
-ctx.globalCompositeOperation = 'lighten';
 
 class Root {
 
@@ -43,10 +41,12 @@ class Root {
         this.size += this.vs;
         this.angleX += this.vax;
         this.angleY += this.vay;
-        if (this.lightness < 80) this.lightness += 0.25
+        if (this.lightness < 70) this.lightness += 0.25
         if (this.size < this.maxSize){
             ctx.fillStyle = '#FFF5DE'
             ctx.fillRect(this.x, this.y, this.size, this.size);
+            ctx.strokeStyle = '#3c5186';
+            ctx.strokeRect(this.x, this.y, this.size, this.size);
             requestAnimationFrame(this.update.bind(this));
         }
     }

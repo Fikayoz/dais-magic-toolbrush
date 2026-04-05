@@ -24,11 +24,11 @@ class Root {
         this.y = y;
         this.speedX = Math.random() * 4 - 2;
         this.speedY = Math.random() * 4 - 2;
-        this.maxSize = Math.random() * 7 + 5;
+        this.maxSize = Math.random() * 7 + 20; //MaxSize enhanced for the psychidelic draw style (5->20). Velocity of size increased by 10x to accomodate
         this.size = Math.random() * 1 + 2;
         this.angleX = Math.random() * 6.2; //360 degrees is APPROXIMATELY 6.2 radians
         this.angleY = Math.random() * 6.2; //360 degrees is APPROXIMATELY 6.2 radians
-        this.vs = Math.random() * 0.2 + 0.05; //velocity of size
+        this.vs = Math.random() * 0.2 + 0.5; //velocity of size
         this.vax = Math.random() * 0.6 - 0.3; //velocity of the x angle
         this.vay = Math.random() * 0.6 - 0.3; //velocity of the y angle
         this.lightness = 10;
@@ -42,53 +42,9 @@ class Root {
         if (this.lightness < 80)
             this.lightness += 0.25;
         if (this.size < this.maxSize) {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = 'hsl(140, 100%,' + this.lightness + '%)';
-            ctx.fill();
-            ctx.stroke();
+            ctx.fillStyle = '#FFF5DE';
+            ctx.fillRect(this.x, this.y, this.size, this.size);
             requestAnimationFrame(this.update.bind(this));
-        }
-        else {
-            const flower = new Flower(this.x, this.y, this.size);
-            flower.grow();
-        }
-    }
-}
-class Flower {
-    x;
-    y;
-    size;
-    maxFlowerSize;
-    image;
-    frameSize;
-    frameX;
-    frameY;
-    angle;
-    va;
-    constructor(x, y, size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.maxFlowerSize = this.size + Math.random() * 50;
-        this.image = new Image();
-        this.image.src = 'flowers.png';
-        this.frameSize = 100;
-        this.frameX = Math.floor(Math.random() * 3);
-        this.frameY = Math.floor(Math.random() * 3);
-        this.angle = 0;
-        this.va = Math.random() * 0.05 - 0.025; //va = velocity of angle
-    }
-    grow() {
-        if (this.size < this.maxFlowerSize) {
-            this.size += 0.3;
-            this.angle += this.va;
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.angle);
-            ctx.drawImage(this.image, (this.frameX * this.frameSize), (this.frameY * this.frameSize), this.frameSize, this.frameSize, (0 - this.size / 2), (0 - this.size / 2), this.size, this.size);
-            ctx.restore();
-            requestAnimationFrame(this.grow.bind(this));
         }
     }
 }

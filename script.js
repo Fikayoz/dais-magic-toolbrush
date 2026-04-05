@@ -96,8 +96,12 @@ window.addEventListener('mousemove', function (e) {
         root.update();
     }
 });
-window.addEventListener('mousedown', function () {
+window.addEventListener('mousedown', function (e) {
     drawing = true;
+    for (let i = 0; i < 3; i++) {
+        const root = new Root(e.x, e.y);
+        root.update();
+    }
 });
 window.addEventListener('mouseup', function () {
     drawing = false;

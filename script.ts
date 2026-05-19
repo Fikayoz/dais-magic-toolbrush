@@ -91,3 +91,14 @@ window.addEventListener('mousedown', function(e){
 window.addEventListener('mouseup', function(){
     drawing = false;
 })
+
+// Experimental code
+
+const navElement: HTMLElement = document.getElementById ("hide-button") as HTMLElement;
+const navBar: HTMLElement = document.querySelector("#navbar") as HTMLElement;
+
+navElement.addEventListener ("click", hideNavBar, false);
+
+function hideNavBar(){    
+    navBar.style.display = "none";
+}

@@ -1,8 +1,10 @@
 "use strict";
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// canvas.width = window.innerWidth;
+// canvas.height = window.innerHeight;
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
 let drawing = false;
 ctx.fillStyle = '#FFF5DE';
 ctx.shadowOffsetX = 0;
@@ -84,3 +86,10 @@ window.addEventListener('mousedown', function (e) {
 window.addEventListener('mouseup', function () {
     drawing = false;
 });
+// Experimental code
+const navElement = document.getElementById("hide-button");
+const navBar = document.querySelector("#navbar");
+navElement.addEventListener("click", hideNavBar, false);
+function hideNavBar() {
+    navBar.style.display = "none";
+}
